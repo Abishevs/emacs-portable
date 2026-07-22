@@ -4,12 +4,14 @@
 ;; and removes UI clutter for faster startup.
 ;;; Code:
 
-;; Completely disable native compilation — prevents ANY attempt to invoke gcc.
-;; This must be set before anything else loads.
-(setq no-native-compile t
+;; Completely disable native compilation — no gcc, no trampolines, nothing.
+;; native-comp-speed -1 means "never attempt to native-compile anything"
+(setq native-comp-speed -1
+      no-native-compile t
       native-comp-jit-compilation nil
       native-comp-deferred-compilation nil
-      native-comp-async-report-warnings-errors nil)
+      native-comp-async-report-warnings-errors nil
+      comp-deferred-compilation nil)
 
 ;; Disable package.el — we manage packages manually
 (setq package-enable-at-startup nil)
