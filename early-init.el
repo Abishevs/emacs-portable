@@ -4,21 +4,12 @@
 ;; and removes UI clutter for faster startup.
 ;;; Code:
 
-;; Disable native (JIT) compilation FIRST — before anything else loads.
-;; Without libgccjit, native-comp errors cascade and break the entire config.
-(setq native-comp-jit-compilation nil
-      native-comp-async-report-warnings-errors nil
-      comp-deferred-compilation nil)
-
-;; Suppress any native-comp warnings that slip through
-(setq native-comp-async-report-warnings-errors 'silent)
-
-;; Disable trampolines compilation (Emacs 29+)
-(setq native-comp-deferred-compilation nil)
-
-;; Point eln-cache to /dev/null so nothing gets written/read
-(when (boundp 'native-comp-eln-load-path)
-  (setcar native-comp-eln-load-path (expand-file-name "eln-cache" temporary-file-directory)))
+;; Completely disable native compilation — prevents ANY attempt to invoke gcc.
+;; This must be set before anything else loads.
+(setq no-native-compile t
+      native-comp-jit-compilation nil
+      native-comp-deferred-compilation nil
+      native-comp-async-report-warnings-errors nil)
 
 ;; Disable package.el — we manage packages manually
 (setq package-enable-at-startup nil)
