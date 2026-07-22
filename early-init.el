@@ -4,14 +4,8 @@
 ;; and removes UI clutter for faster startup.
 ;;; Code:
 
-;; Completely disable native compilation — no gcc, no trampolines, nothing.
-;; native-comp-speed -1 means "never attempt to native-compile anything"
-(setq native-comp-speed -1
-      no-native-compile t
-      native-comp-jit-compilation nil
-      native-comp-deferred-compilation nil
-      native-comp-async-report-warnings-errors nil
-      comp-deferred-compilation nil)
+;; Native compilation — let Emacs JIT compile for performance
+(setq native-comp-async-report-warnings-errors nil)  ; suppress warnings buffer
 
 ;; Disable package.el — we manage packages manually
 (setq package-enable-at-startup nil)
