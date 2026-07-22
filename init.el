@@ -13,6 +13,8 @@
     (dolist (dir (directory-files vendor-dir t "\\`[^.]"))
       (when (file-directory-p dir)
         (add-to-list 'load-path dir)
+        ;; Also add to theme path (for catppuccin etc.)
+        (add-to-list 'custom-theme-load-path dir)
         ;; Also add lisp/ subdirectory if it exists (magit convention)
         (let ((lisp-dir (expand-file-name "lisp" dir)))
           (when (file-directory-p lisp-dir)
@@ -70,8 +72,9 @@
 (set-language-environment "UTF-8")
 (prefer-coding-system 'utf-8)
 
-;;;; --- Theme ---
-(load-theme 'modus-vivendi t)
+;;;; --- Theme (Catppuccin Macchiato) ---
+(setq catppuccin-flavor 'macchiato)
+(load-theme 'catppuccin t)
 
 ;;;; --- Evil Mode (Vim keybindings) ---
 (setq evil-want-integration t

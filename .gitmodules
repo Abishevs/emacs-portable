@@ -43,3 +43,6 @@
 [submodule "vendor/markdown-mode"]
 	path = vendor/markdown-mode
 	url = https://github.com/jrblevin/markdown-mode.git
+[submodule "vendor/catppuccin"]
+	path = vendor/catppuccin
+	url = https://github.com/catppuccin/emacs.git
