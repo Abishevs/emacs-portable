@@ -74,6 +74,7 @@
 
 ;;;; --- Theme (Catppuccin Macchiato) ---
 (setq catppuccin-flavor 'macchiato)
+(require 'catppuccin-theme)
 (load-theme 'catppuccin t)
 
 ;;;; --- Evil Mode (Vim keybindings) ---
