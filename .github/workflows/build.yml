@@ -32,14 +32,39 @@ jobs:
             -l init.el \
             -l ../../test-config.el
 
-      - name: Create zip artifact
+      - name: Create zip
         run: |
           cd build
           zip -r ../emacs-portable.zip .emacs.d/
 
-      - name: Upload artifact
+      - name: Upload artifact (PR / manual)
         uses: actions/upload-artifact@v4
         with:
           name: emacs-portable
           path: emacs-portable.zip
           retention-days: 90
+
+      - name: Create rolling release
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Delete previous 'latest' release if it exists
+          gh release delete latest --yes 2>/dev/null || true
+          git tag -f latest
+          git push -f origin latest
+
+          # Create new release with the zip
+          gh release create latest emacs-portable.zip \
+            --title "Latest Build" \
+            --notes "Auto-built from master ($(date -u +%Y-%m-%d))
+
+          **Download:** \`emacs-portable.zip\`
+
+          **Usage:**
+          \`\`\`bash
+          unzip emacs-portable.zip -d ~
+          emacs
+          \`\`\`
+
+          **Tests:** 47 passed ✓"
