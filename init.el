@@ -73,9 +73,22 @@
 (prefer-coding-system 'utf-8)
 
 ;;;; --- Theme (Catppuccin Macchiato) ---
+;; Catppuccin needs load-file-name set to find its definitions file.
+;; We load the definitions explicitly first as a safety measure.
 (setq catppuccin-flavor 'macchiato)
-(require 'catppuccin-theme)
-(load-theme 'catppuccin t)
+(condition-case err
+    (let* ((vendor-dir (expand-file-name "vendor" user-emacs-directory))
+           (ctp-dir (expand-file-name "catppuccin" vendor-dir))
+           (defs-file (expand-file-name "catppuccin-definitions.el" ctp-dir)))
+      ;; Ensure catppuccin dir is in load-path
+      (add-to-list 'load-path ctp-dir)
+      (add-to-list 'custom-theme-load-path ctp-dir)
+      ;; Load the theme
+      (require 'catppuccin-theme)
+      (load-theme 'catppuccin t))
+  (error
+   (message "Catppuccin failed: %s — falling back to modus-vivendi" err)
+   (load-theme 'modus-vivendi t)))
 
 ;;;; --- Evil Mode (Vim keybindings) ---
 (setq evil-want-integration t
