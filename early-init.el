@@ -7,6 +7,12 @@
 ;; Disable package.el — we manage packages manually
 (setq package-enable-at-startup nil)
 
+;; Disable native (JIT) compilation if libgccjit is not available
+;; Emacs still works fine interpreted — native-comp is just an optimization
+(when (featurep 'native-compile)
+  (setq native-comp-jit-compilation nil
+        native-comp-async-report-warnings-errors nil))
+
 ;; Prevent the glimpse of un-styled Emacs
 (setq inhibit-redisplay t
       inhibit-message t)
