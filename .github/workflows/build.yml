@@ -46,27 +46,35 @@ jobs:
           path: emacs-portable.zip
           retention-days: 90
 
-      - name: Create rolling release
+      - name: Create releases
         if: github.ref == 'refs/heads/master' && github.event_name == 'push'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          # Delete previous 'latest' release if it exists
+          # Versioned release (kept forever)
+          VERSION="v$(date -u +%Y%m%d-%H%M%S)"
+          SHORT_SHA="${GITHUB_SHA::7}"
+
+          gh release create "${VERSION}" emacs-portable.zip \
+            --title "Build ${VERSION}" \
+            --notes "Build from commit ${SHORT_SHA} ($(date -u +%Y-%m-%d %H:%M UTC))
+
+          **Download:** \`emacs-portable.zip\`"
+
+          # Update rolling 'latest' release
           gh release delete latest --yes 2>/dev/null || true
           git tag -f latest
           git push -f origin latest
 
-          # Create new release with the zip
           gh release create latest emacs-portable.zip \
             --title "Latest Build" \
-            --notes "Auto-built from master ($(date -u +%Y-%m-%d))
+            --notes "Latest build — always points to newest.
+          Same as **${VERSION}** (commit ${SHORT_SHA}).
 
-          **Download:** \`emacs-portable.zip\`
+          For older versions, see [all releases](../../releases).
 
           **Usage:**
           \`\`\`bash
           unzip emacs-portable.zip -d ~
           emacs
-          \`\`\`
-
-          **Tests:** 47 passed ✓"
+          \`\`\`"
