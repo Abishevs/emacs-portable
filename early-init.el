@@ -4,14 +4,17 @@
 ;; and removes UI clutter for faster startup.
 ;;; Code:
 
+;; Disable native (JIT) compilation FIRST — before anything else loads.
+;; Without libgccjit, native-comp errors cascade and break the entire config.
+(setq native-comp-jit-compilation nil
+      native-comp-async-report-warnings-errors nil
+      comp-deferred-compilation nil)
+
+;; Suppress any native-comp warnings that slip through
+(setq native-comp-async-report-warnings-errors 'silent)
+
 ;; Disable package.el — we manage packages manually
 (setq package-enable-at-startup nil)
-
-;; Disable native (JIT) compilation if libgccjit is not available
-;; Emacs still works fine interpreted — native-comp is just an optimization
-(when (featurep 'native-compile)
-  (setq native-comp-jit-compilation nil
-        native-comp-async-report-warnings-errors nil))
 
 ;; Prevent the glimpse of un-styled Emacs
 (setq inhibit-redisplay t
