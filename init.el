@@ -80,7 +80,7 @@
 (setq evil-want-integration t
       evil-want-keybinding t
       evil-want-C-u-scroll t
-      evil-want-C-i-jump t
+      evil-want-C-i-jump nil           ; don't steal TAB for jump-forward
       evil-undo-system 'undo-redo)
 (require 'evil)
 (evil-mode 1)
@@ -358,9 +358,12 @@
 ;; Evil keybindings for org-mode
 (with-eval-after-load 'org
   (evil-define-key 'normal org-mode-map
-    (kbd "TAB")   #'org-cycle              ; fold/unfold heading
-    (kbd "S-TAB") #'org-shifttab           ; fold/unfold all
+    [tab]         #'org-cycle              ; GUI tab key
+    (kbd "TAB")   #'org-cycle              ; terminal TAB
+    [backtab]     #'org-shifttab           ; S-TAB (GUI)
+    (kbd "S-TAB") #'org-shifttab           ; S-TAB (terminal)
     (kbd "RET")   #'org-return             ; follow links / newline
+    [return]      #'org-return             ; GUI return
     "zo"          #'org-show-subtree       ; vim-style open fold
     "zc"          #'org-hide-subtree       ; vim-style close fold
     "za"          #'org-cycle              ; vim-style toggle fold
@@ -374,6 +377,7 @@
 
   ;; Insert state — TAB should indent/cycle in src blocks
   (evil-define-key 'insert org-mode-map
+    [tab]       #'org-cycle
     (kbd "TAB") #'org-cycle))
 
 ;;;; --- Dired ---

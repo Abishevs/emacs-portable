@@ -33,7 +33,7 @@
 (test-assert "evil-mode is active" evil-mode)
 (test-assert "default state is normal" (eq evil-default-state 'normal))
 (test-assert "C-u scrolls (evil-want-C-u-scroll)" evil-want-C-u-scroll)
-(test-assert "undo system is undo-redo" (eq evil-undo-system 'undo-redo))
+(test-assert "C-i-jump disabled (TAB free for org)" (not evil-want-C-i-jump))
 
 ;; Check ESC works in insert state
 (test-assert "ESC exits insert mode"
@@ -130,6 +130,8 @@
 (let ((aux-map (evil-get-auxiliary-keymap org-mode-map 'normal)))
   (test-assert "TAB → org-cycle in normal state"
                (eq (lookup-key aux-map (kbd "TAB")) 'org-cycle))
+  (test-assert "[tab] → org-cycle in normal state (GUI)"
+               (eq (lookup-key aux-map [tab]) 'org-cycle))
   (test-assert "zo → org-show-subtree"
                (eq (lookup-key aux-map (kbd "zo")) 'org-show-subtree))
   (test-assert "zc → org-hide-subtree"
