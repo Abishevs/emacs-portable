@@ -13,6 +13,13 @@
 ;; Suppress any native-comp warnings that slip through
 (setq native-comp-async-report-warnings-errors 'silent)
 
+;; Disable trampolines compilation (Emacs 29+)
+(setq native-comp-deferred-compilation nil)
+
+;; Point eln-cache to /dev/null so nothing gets written/read
+(when (boundp 'native-comp-eln-load-path)
+  (setcar native-comp-eln-load-path (expand-file-name "eln-cache" temporary-file-directory)))
+
 ;; Disable package.el — we manage packages manually
 (setq package-enable-at-startup nil)
 
