@@ -352,6 +352,27 @@
         ("n" "Note" entry (file+headline "~/org/inbox.org" "Notes")
          "* %? :note:\n  %i\n  %a")))
 
+;; Evil keybindings for org-mode
+(with-eval-after-load 'org
+  (evil-define-key 'normal org-mode-map
+    (kbd "TAB")   #'org-cycle              ; fold/unfold heading
+    (kbd "S-TAB") #'org-shifttab           ; fold/unfold all
+    (kbd "RET")   #'org-return             ; follow links / newline
+    "zo"          #'org-show-subtree       ; vim-style open fold
+    "zc"          #'org-hide-subtree       ; vim-style close fold
+    "za"          #'org-cycle              ; vim-style toggle fold
+    "zM"          #'org-content            ; close all folds
+    "zR"          #'org-show-all           ; open all folds
+    "t"           #'org-todo               ; cycle TODO state
+    "H"           #'org-shiftleft          ; demote / prev TODO
+    "L"           #'org-shiftright         ; promote / next TODO
+    "J"           #'org-move-subtree-down  ; move heading down
+    "K"           #'org-move-subtree-up)   ; move heading up
+
+  ;; Insert state — TAB should indent/cycle in src blocks
+  (evil-define-key 'insert org-mode-map
+    (kbd "TAB") #'org-cycle))
+
 ;;;; --- Dired ---
 (setq dired-listing-switches "-alh --group-directories-first"
       dired-dwim-target t)

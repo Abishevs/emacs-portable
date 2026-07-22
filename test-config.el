@@ -124,6 +124,25 @@
 (test-assert ".md associated with markdown-mode"
              (eq (cdr (assoc "\\.md\\'" auto-mode-alist)) 'markdown-mode))
 
+;;; --- Org Mode Evil Integration ---
+(princ "\n=== Org Mode ===\n")
+(require 'org)
+(let ((aux-map (evil-get-auxiliary-keymap org-mode-map 'normal)))
+  (test-assert "TAB → org-cycle in normal state"
+               (eq (lookup-key aux-map (kbd "TAB")) 'org-cycle))
+  (test-assert "zo → org-show-subtree"
+               (eq (lookup-key aux-map (kbd "zo")) 'org-show-subtree))
+  (test-assert "zc → org-hide-subtree"
+               (eq (lookup-key aux-map (kbd "zc")) 'org-hide-subtree))
+  (test-assert "zM → org-content (close all)"
+               (eq (lookup-key aux-map (kbd "zM")) 'org-content))
+  (test-assert "t → org-todo"
+               (eq (lookup-key aux-map (kbd "t")) 'org-todo))
+  (test-assert "J → org-move-subtree-down"
+               (eq (lookup-key aux-map (kbd "J")) 'org-move-subtree-down))
+  (test-assert "K → org-move-subtree-up"
+               (eq (lookup-key aux-map (kbd "K")) 'org-move-subtree-up)))
+
 ;;; --- Results ---
 (princ (format "\n=== Results: %d passed, %d failed ===\n"
                test-passes (length test-failures)))
