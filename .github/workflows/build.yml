@@ -1,0 +1,45 @@
+name: Build Emacs Portable
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Emacs
+        run: sudo apt-get update && sudo apt-get install -y emacs-nox
+
+      - name: Run build script
+        run: ./build.sh
+
+      - name: Run tests
+        run: |
+          cd build/.emacs.d
+          emacs --batch \
+            --eval "(setq user-emacs-directory \"$(pwd)/\")" \
+            -l early-init.el \
+            -l init.el \
+            -l ../../test-config.el
+
+      - name: Create zip artifact
+        run: |
+          cd build
+          zip -r ../emacs-portable.zip .emacs.d/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: emacs-portable
+          path: emacs-portable.zip
+          retention-days: 90

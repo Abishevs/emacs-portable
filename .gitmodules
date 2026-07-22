@@ -1,0 +1,45 @@
+[submodule "vendor/evil"]
+	path = vendor/evil
+	url = https://github.com/emacs-evil/evil.git
+[submodule "vendor/goto-chg"]
+	path = vendor/goto-chg
+	url = https://github.com/emacs-evil/goto-chg.git
+[submodule "vendor/general"]
+	path = vendor/general
+	url = https://github.com/noctuid/general.el.git
+[submodule "vendor/vertico"]
+	path = vendor/vertico
+	url = https://github.com/minad/vertico.git
+[submodule "vendor/consult"]
+	path = vendor/consult
+	url = https://github.com/minad/consult.git
+[submodule "vendor/orderless"]
+	path = vendor/orderless
+	url = https://github.com/oantolin/orderless.git
+[submodule "vendor/which-key"]
+	path = vendor/which-key
+	url = https://github.com/justbur/emacs-which-key.git
+[submodule "vendor/magit"]
+	path = vendor/magit
+	url = https://github.com/magit/magit.git
+[submodule "vendor/transient"]
+	path = vendor/transient
+	url = https://github.com/magit/transient.git
+[submodule "vendor/with-editor"]
+	path = vendor/with-editor
+	url = https://github.com/magit/with-editor.git
+[submodule "vendor/compat"]
+	path = vendor/compat
+	url = https://github.com/emacs-compat/compat.git
+[submodule "vendor/dash"]
+	path = vendor/dash
+	url = https://github.com/magnars/dash.el.git
+[submodule "vendor/cond-let"]
+	path = vendor/cond-let
+	url = https://github.com/tarsius/cond-let.git
+[submodule "vendor/llama"]
+	path = vendor/llama
+	url = https://github.com/tarsius/llama.git
+[submodule "vendor/markdown-mode"]
+	path = vendor/markdown-mode
+	url = https://github.com/jrblevin/markdown-mode.git

@@ -1,0 +1,10 @@
+# Build output
+build/
+
+# Emacs state files
+*.elc
+custom.el
+history
+recentf
+auto-save-list/
+eln-cache/
